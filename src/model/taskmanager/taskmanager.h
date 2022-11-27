@@ -12,11 +12,13 @@
 
 class TaskManager {
   public:
-    TaskManager();
+    TaskManager(const std::string& file_path);
     ~TaskManager();
+    void Execute(const std::string& command);
 
   private:
-    DBHandler dbhandler_;
+    DBHandler* dbhandler_;
+    Parser parser_;
     Parser::str_vec_ data_;
     std::map<int, Parser::func_> functions_;
     

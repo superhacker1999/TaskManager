@@ -1,12 +1,17 @@
+.PHONY: clean build test all
 LIB_FLAG=-l sqlite3
-CC=g++
-FLAGS=
-SRC=model/taskmanager.cc 
-# view/interface.cc
+CC=gcc
+FLAGS=-Wall -Werror -Wextra -lstdc++ -std=c++17
+SRCS=controller/controller.cc model/dbhandler/dbhandler.cc model/parser/parser.cc model/taskmanager/taskmanager.cc view/interface.cc
+DB_PATH=../todo.db
 
 clean:
 	rm -rf mngr
 
-test: clean
-	$(CC) $(FLAGS) $(SRC) $(LIB_FLAG) -o mngr
+build: clean
+	$(CC) $(FLAGS) $(LIB_FLAG) $(SRCS) -o mngr
+
+test:	build
 	./mngr $(DB_PATH)
+
+

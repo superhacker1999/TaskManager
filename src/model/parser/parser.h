@@ -23,9 +23,9 @@ class Parser {
     ~Parser() {;}
     using str_vec_ = std::vector<const std::string&>;
     using func_ = std::function<const std::string(str_vec_)>;
-
     std::pair<int, str_vec_> ParseCommand(const std::string& command);
-    str_vec_ PrepareCommand(const std::string& command);
+  private:
+    str_vec_ PrepareCommand_(const std::string& command);
 
 };  // class Parser
 #endif  // SRC_PARSER_PARSER_H_

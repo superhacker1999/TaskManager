@@ -15,6 +15,7 @@ DBHandler::~DBHandler() {
 
 int DBHandler::exec(void* data, int argc, char** argv, char** azColName) {
   std::string select_data;
+  (void)azColName;
   char** str_data = (char**)data;
   for (int i = 1; i < argc; ++i) {
     select_data.append(argv[i]);
@@ -87,8 +88,8 @@ const std::string DBHandler::SelectTasks(std::vector<const std::string&> values)
   return Execute_(query, success_msg);
 }
 
-int main() {
-  DBHandler manager("/Users/padmemur/Desktop/MERTEH/todo.db");
-  // std::cout << manager.ViewTasks(std::vector<const std::string>{"select * from tasks;"});
-  return 0;
-}
+// int main() {
+//   DBHandler manager("/Users/padmemur/Desktop/MERTEH/todo.db");
+//   // std::cout << manager.ViewTasks(std::vector<const std::string>{"select * from tasks;"});
+//   return 0;
+// }
