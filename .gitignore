@@ -1,0 +1,4 @@
+*.DS*
+*vscode*
+*txt
+../.DS_Store
