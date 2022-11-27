@@ -45,57 +45,50 @@ const std::string DBHandler::Execute_(const std::string& query, const std::strin
   return output_str;
 }
 
-const std::string DBHandler::AddTask(const std::string& name,
-                            const std::string& description,
-                            const std::string& date,
-                            const std::string& category) {
+const std::string DBHandler::AddTask(std::vector<const std::string&> values) {
   std::string query = "insert into tasks\
     (name, description, date, category, status)\
-    values('"+ name + "','" + description + "','" +
-    date + "','" + category + "',0);";
+    values('"+ values.at(0) + "','" + values.at(1) + "','" +
+    values.at(2) + "','" + values.at(3) + "',0);";
   return Execute_(query, "New task added successfully");
 }
 
-const std::string DBHandler::MakeItDone(const std::string& name) {
+const std::string DBHandler::MakeItDone(std::vector<const std::string&> values) {
   std::string query = "update tasks\
    set status=done\
-   where name='" + name + "';";
-  std::string succes_msg = "Task " + name + " is done!";
+   where name='" + values.at(0) + "';";
+  std::string succes_msg = "Task " + values.at(0) + " is done!";
   return Execute_(query, succes_msg);
 }
 
 //todo
 // add check if this name exists
-const std::string DBHandler::UpdateTask(const std::string& prev_name,
-                                    const std::string& name,
-                                    const std::string& description,
-                                    const std::string& date,
-                                    const std::string& category) {
+const std::string DBHandler::UpdateTask(std::vector<const std::string&> values) {
   std::string query = "update tasks set name='"
-    + name + "', description='"
-    + description + "', date='"
-    + date + "', category='"
-    + category + "' where name='"
-    + prev_name + "';";
-  std::string success_msg = "Task " + prev_name + " successfully updated!";
+    + values.at(0) + "', description='"
+    + values.at(1) + "', date='"
+    + values.at(2) + "', category='"
+    + values.at(3) + "' where name='"
+    + values.at(4) + "';";
+  std::string success_msg = "Task " + values.at(0) + " successfully updated!";
   return Execute_(query, success_msg);
 }
 
-const std::string DBHandler::DeleteTask(const std::string& name) {
+const std::string DBHandler::DeleteTask(std::vector<const std::string&> values) {
   std::string query = "delete from tasks\
-    where name='" + name + "';";
-  std::string success_msg = "Task " + name + " deleted successfully";
+    where name='" + values.at(0) + "';";
+  std::string success_msg = "Task " + values.at(0) + " deleted successfully";
   return Execute_(query, success_msg);
 }
 
-const std::string DBHandler::ViewTasks(const std::string& condition) {
-  std::string query = condition;
+const std::string DBHandler::SelectTasks(std::vector<const std::string&> values) {
+  std::string query = values.at(0);
   std::string success_msg = "Success!\n";
   return Execute_(query, success_msg);
 }
 
 int main() {
   DBHandler manager("/Users/padmemur/Desktop/MERTEH/todo.db");
-  std::cout << manager.ViewTasks("select * from tasks;");
+  // std::cout << manager.ViewTasks(std::vector<const std::string>{"select * from tasks;"});
   return 0;
 }
