@@ -21,6 +21,8 @@ class TaskManager {
     Parser parser_;
     Parser::str_vec_ data_;
     std::map<int, Parser::func_> functions_;
+
+    void UpdateMap_();
     
 };  // class TaskManager
 

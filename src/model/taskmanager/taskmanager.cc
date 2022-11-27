@@ -1,19 +1,7 @@
 #include "taskmanager.h"
 
 TaskManager::TaskManager(const std::string& file_path) : dbhandler_(new DBHandler(file_path)) {
-  functions_ = {
-    {kERROR, nullptr}, {kEXIT, nullptr},
-    {kADD, std::bind(&DBHandler::AddTask, dbhandler_, data_)},
-    {kDONE, std::bind(&DBHandler::MakeItDone, dbhandler_, data_)},
-    {kUPDATE, std::bind(&DBHandler::UpdateTask, dbhandler_, data_)},
-    {kDELETE, std::bind(&DBHandler::DeleteTask, dbhandler_, data_)},
-    {kSELECT, std::bind(&DBHandler::SelectTasks, dbhandler_, data_)}
-  };
-  // example 1
-  // functions_[kUPDATE](data_);
-
-  // example 2
-  // functions_.find(kUPDATE)->second(data_);
+  UpdateMap_();
 }
 
 TaskManager::~TaskManager() {
@@ -27,6 +15,20 @@ void TaskManager::Execute(const std::string& command) {
   } else if (result.first == kERROR) {
     // sending error to view class
   } else {
-    functions_[result.first](result.second);
+    // std::cout << "vec size = " << result.second.size() << std::endl;
+    data_ = result.second;
+    UpdateMap_();
+    functions_[result.first](data_);
   }
+}
+
+void TaskManager::UpdateMap_() {
+  functions_ = {
+    {kERROR, nullptr}, {kEXIT, nullptr},
+    {kADD, std::bind(&DBHandler::AddTask, dbhandler_, data_)},
+    {kDONE, std::bind(&DBHandler::MakeItDone, dbhandler_, data_)},
+    {kUPDATE, std::bind(&DBHandler::UpdateTask, dbhandler_, data_)},
+    {kDELETE, std::bind(&DBHandler::DeleteTask, dbhandler_, data_)},
+    {kSELECT, std::bind(&DBHandler::SelectTasks, dbhandler_, data_)}
+  };
 }

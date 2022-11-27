@@ -37,5 +37,6 @@ Parser::str_vec_ Parser::PrepareCommand_(const std::string& command) {
   }
   // remove command word from vector, we dont need it
   result.erase(result.begin());
+  std::cout << "result.size() = " << result.size() << std::endl;
   return result;
 }

@@ -14,15 +14,15 @@ class DBHandler {
     DBHandler(const std::string& db_file_path);
     ~DBHandler();
     // name, description, date, category - 4
-    const std::string AddTask(std::vector<const std::string&> values);
+    const std::string AddTask(std::vector<std::string> values);
     // name - 1
-    const std::string MakeItDone(std::vector<const std::string&> values);
+    const std::string MakeItDone(std::vector<std::string> values);
     // prev_name, name, description, date, category - 5
-    const std::string UpdateTask(std::vector<const std::string&> values);
+    const std::string UpdateTask(std::vector<std::string> values);
     // name - 1
-    const std::string DeleteTask(std::vector<const std::string&> values);
+    const std::string DeleteTask(std::vector<std::string> values);
     // condition - 1
-    const std::string SelectTasks(std::vector<const std::string&> values);
+    const std::string SelectTasks(std::vector<std::string> values);
 
   private:
     sqlite3* db_;

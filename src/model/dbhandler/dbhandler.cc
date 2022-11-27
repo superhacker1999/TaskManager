@@ -46,7 +46,7 @@ const std::string DBHandler::Execute_(const std::string& query, const std::strin
   return output_str;
 }
 
-const std::string DBHandler::AddTask(std::vector<const std::string&> values) {
+const std::string DBHandler::AddTask(std::vector<std::string> values) {
   std::string query = "insert into tasks\
     (name, description, date, category, status)\
     values('"+ values.at(0) + "','" + values.at(1) + "','" +
@@ -54,9 +54,9 @@ const std::string DBHandler::AddTask(std::vector<const std::string&> values) {
   return Execute_(query, "New task added successfully");
 }
 
-const std::string DBHandler::MakeItDone(std::vector<const std::string&> values) {
+const std::string DBHandler::MakeItDone(std::vector<std::string> values) {
   std::string query = "update tasks\
-   set status=done\
+   set status=1\
    where name='" + values.at(0) + "';";
   std::string succes_msg = "Task " + values.at(0) + " is done!";
   return Execute_(query, succes_msg);
@@ -64,7 +64,7 @@ const std::string DBHandler::MakeItDone(std::vector<const std::string&> values) 
 
 //todo
 // add check if this name exists
-const std::string DBHandler::UpdateTask(std::vector<const std::string&> values) {
+const std::string DBHandler::UpdateTask(std::vector<std::string> values) {
   std::string query = "update tasks set name='"
     + values.at(0) + "', description='"
     + values.at(1) + "', date='"
@@ -75,14 +75,14 @@ const std::string DBHandler::UpdateTask(std::vector<const std::string&> values) 
   return Execute_(query, success_msg);
 }
 
-const std::string DBHandler::DeleteTask(std::vector<const std::string&> values) {
+const std::string DBHandler::DeleteTask(std::vector<std::string> values) {
   std::string query = "delete from tasks\
     where name='" + values.at(0) + "';";
   std::string success_msg = "Task " + values.at(0) + " deleted successfully";
   return Execute_(query, success_msg);
 }
 
-const std::string DBHandler::SelectTasks(std::vector<const std::string&> values) {
+const std::string DBHandler::SelectTasks(std::vector<std::string> values) {
   std::string query = values.at(0);
   std::string success_msg = "Success!\n";
   return Execute_(query, success_msg);

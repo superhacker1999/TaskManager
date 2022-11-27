@@ -11,6 +11,9 @@ clean:
 build: clean
 	$(CC) $(FLAGS) $(LIB_FLAG) $(SRCS) -o mngr
 
+debug: clean
+	$(CC) $(FLAGS) -g $(LIB_FLAG) $(SRCS) -o mngr
+
 test:	build
 	./mngr $(DB_PATH)
 
