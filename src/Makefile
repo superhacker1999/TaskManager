@@ -5,8 +5,7 @@ FLAGS=-Wall -Werror -Wextra -lstdc++ -std=c++17
 SRCS=controller/controller.cc model/dbhandler/dbhandler.cc model/parser/parser.cc model/taskmanager/taskmanager.cc view/interface.cc
 DB_PATH=../todo.db
 
-clean:
-	rm -rf mngr
+all: test
 
 build: clean
 	$(CC) $(FLAGS) $(LIB_FLAG) $(SRCS) -o mngr
@@ -16,6 +15,3 @@ debug: clean
 
 test:	build
 	./mngr $(DB_PATH)
-
-style_check:
-	

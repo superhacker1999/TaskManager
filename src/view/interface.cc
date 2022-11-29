@@ -5,9 +5,7 @@ Interface::Interface(const std::string file_path) {
   controller_->SetOutputStr(&output_str_);
 }
 
-Interface::~Interface() {
-  delete controller_;
-}
+Interface::~Interface() { delete controller_; }
 
 void Interface::Run() {
   std::string command;
@@ -52,7 +50,7 @@ void Interface::GetUpdateInfo(std::string& command) {
 int main(int argc, char** argv) {
   if (argc == 2) {
     Interface iface(argv[1]);
-    iface.Run();  
+    iface.Run();
   }
   return 0;
 }
