@@ -33,7 +33,7 @@ const std::string DBHandler::Execute_(const std::string& query, const std::strin
   char *zerMsg = 0;
   char* message = (char*)calloc(10, sizeof(char));
   std::string output_str;
-  std::string header = "NAME  |  DESCRIPTION  |  DATE  |  CATEGORY  |  STATUS\n\n";
+  std::string header = "\nNAME  |  DESCRIPTION  |  DATE  |  CATEGORY  |  STATUS\n\n";
   if (sqlite3_exec(db_, query.c_str(), exec, &message, &zerMsg) != SQLITE_OK) {
     printf("SQL error: %s\n", zerMsg);
     sqlite3_free(zerMsg);
