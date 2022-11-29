@@ -5,6 +5,7 @@
 #include <vector>
 #include <utility>
 #include <functional>
+#include <map>
 #include "../dbhandler/dbhandler.h"
 
 enum commands {
@@ -12,15 +13,15 @@ enum commands {
   kEXIT,
   kADD,
   kDONE,
-  kPREUPDATE,
   kUPDATE,
   kDELETE,
-  kSELECT
+  kSELECT,
+  kPREUPDATE
 };
 
 class Parser {
   public:
-    Parser() {;}
+    Parser();
     ~Parser() {;}
     using str_vec_ = std::vector<std::string>;
     using func_ = std::function<const std::string(str_vec_)>;
@@ -28,6 +29,10 @@ class Parser {
     
   private:
     str_vec_ PrepareCommand_(const std::string& command);
+    int GetFunc(const std::string& command_line);
+
+    std::vector<std::string> commands_;
+    std::map<std::string, int> funcs_;
 
 };  // class Parser
 #endif  // SRC_PARSER_PARSER_H_

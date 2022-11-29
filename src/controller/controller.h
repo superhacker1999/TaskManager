@@ -8,7 +8,7 @@ class Controller {
   public:
     Controller(const std::string& file_path);
     ~Controller();
-    void Execute(const std::string& command);
+    int Execute(const std::string& command);
     void SetOutputStr(std::string** str);
 
   private:

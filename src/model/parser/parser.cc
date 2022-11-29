@@ -1,32 +1,21 @@
 #include "parser.h"
 
+Parser::Parser() {
+  commands_ = {"exit", "add", "done", "update", "delete", "select"};
+  for (int i = kEXIT; i <= kSELECT; ++i)
+    funcs_.insert(std::make_pair(commands_.at(i - 1), i));
+}
+
 std::pair<int, Parser::str_vec_> Parser::ParseCommand(const std::string& command) {
   std::pair<int, str_vec_> result;
   std::string command_line(command, 0, 6);
-  if (command_line.find("exit") != std::string::npos) {
-    result.first = kEXIT;
-  } else if (command_line.find("add") != std::string::npos) {
-    result.first = kADD;
+  result.first = GetFunc(command_line);
+  if (result.first == kUPDATE && std::count(command.begin(), command.end(), ' ') < 2)
+    result.first = kPREUPDATE;
+   else if (result.first >= kADD && result.first <= kDELETE) {
     result.second = PrepareCommand_(command);
-  } else if (command_line.find("done") != std::string::npos) {
-    result.first = kDONE;
-    result.second = PrepareCommand_(command);
-  } else if (command_line.find("update") != std::string::npos) {
-    if (std::count(command.begin(), command.end(), ' ') < 2)
-      result.first = kPREUPDATE;
-    else {
-      result.first = kUPDATE;
-      result.second = PrepareCommand_(command); 
-    }
-  } else if (command_line.find("delete") != std::string::npos) {
-    result.first = kDELETE;
-    result.second = PrepareCommand_(command);
-  } else if (command_line.find("select") != std::string::npos) {
-    result.first = kSELECT;
+  } else if (result.first == kSELECT) {
     result.second = std::vector<std::string>{command};
-  } else {
-    // incorrect command
-    result.first = kERROR;
   }
   return result;
 }
@@ -41,6 +30,13 @@ Parser::str_vec_ Parser::PrepareCommand_(const std::string& command) {
   }
   // remove command word from vector, we dont need it
   result.erase(result.begin());
-  std::cout << "result.size() = " << result.size() << std::endl;
   return result;
+}
+
+int Parser::GetFunc(const std::string& command_line) {
+  int res = kERROR;
+  for (auto it : funcs_)
+    if (command_line.find(it.first) != std::string::npos)
+      res = it.second;
+  return res;
 }

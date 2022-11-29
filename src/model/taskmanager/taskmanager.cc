@@ -1,33 +1,29 @@
 #include "taskmanager.h"
 
-TaskManager::TaskManager(const std::string& file_path) : dbhandler_(new DBHandler(file_path)) {
-  functions_ = {
-    {kERROR, nullptr} , {kEXIT, nullptr},
-    {kADD, &DBHandler::AddTask}, {kDONE, &DBHandler::MakeItDone},
-    {kUPDATE, &DBHandler::UpdateTask}, {kDELETE, &DBHandler::DeleteTask},
-    {kSELECT, &DBHandler::SelectTasks}
-  };
-}
+TaskManager::TaskManager(const std::string& file_path)
+  : dbhandler_(new DBHandler(file_path)), 
+    functions_({
+      {kERROR, nullptr} , {kEXIT, nullptr},
+      {kADD, &DBHandler::AddTask}, {kDONE, &DBHandler::MakeItDone},
+      {kUPDATE, &DBHandler::UpdateTask}, {kDELETE, &DBHandler::DeleteTask},
+      {kSELECT, &DBHandler::SelectTasks}
+    }) { ; }
 
 TaskManager::~TaskManager() {
   delete dbhandler_;
 }
 
-void TaskManager::Execute(const std::string& command) {
+int TaskManager::Execute(const std::string& command) {
   auto result = parser_.ParseCommand(command);
-  if (result.first == kEXIT) {
-    throw EXIT_SUCCESS;
-  } else if (result.first == kERROR) {
-    throw std::runtime_error("Invalid command.");
-  } else if (result.first == kPREUPDATE) {
-    throw (int)kPREUPDATE;
-  } else {
+  if (result.first != kEXIT && result.first != kERROR && result.first != kPREUPDATE) {
     try {
       output_str_ = (dbhandler_->*functions_[result.first])(result.second);
     } catch (std::exception& err) {
-      throw std::runtime_error("Incorrect input data.");
+      std::cout << "incorrindata\n";
+      throw std::invalid_argument("Incorrect input data.");
     }
   }
+  return result.first;
 }
 
 void TaskManager::SetOutputStr(std::string** str) {

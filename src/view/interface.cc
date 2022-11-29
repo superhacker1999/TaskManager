@@ -11,22 +11,25 @@ Interface::~Interface() {
 
 void Interface::Run() {
   std::string command;
+  int status = -1;
   while (true) {
     getline(std::cin, command);
     try {
-      controller_->Execute(command);
-    } catch (int exc) {
-      if (exc == EXIT_SUCCESS) {
-        std::cout << "Exit signal\n";
-        break;
-      } else {
-        GetUpdateInfo(command);
-        controller_->Execute(command);
-      }
-    } catch (std::runtime_error& exc) {
-        std::cout << exc.what() << std::endl;
+      status = controller_->Execute(command);
+    } catch (std::invalid_argument& exc) {
+      std::cout << exc.what() << std::endl;
+      continue;
     }
-    std::cout << *output_str_;
+    if (status == kEXIT) {
+      break;
+    } else if (status == kERROR) {
+      std::cout << "Invalid command\n";
+    } else if (status == kPREUPDATE) {
+      GetUpdateInfo(command);
+      controller_->Execute(command);
+    } else {
+      std::cout << *output_str_;
+    }
   }
 }
 

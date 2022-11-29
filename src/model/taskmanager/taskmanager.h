@@ -15,7 +15,7 @@ class TaskManager {
   public:
     TaskManager(const std::string& file_path);
     ~TaskManager();
-    void Execute(const std::string& command);
+    int Execute(const std::string& command);
     using DBHandlerFunc = const std::string (DBHandler::*) (Parser::str_vec_);
     void SetOutputStr(std::string** str);
 

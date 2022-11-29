@@ -8,14 +8,14 @@ Controller::~Controller() {
   delete task_mngr_;
 }
 
-void Controller::Execute(const std::string& command) {
+int Controller::Execute(const std::string& command) {
+  int result;
   try {
-    task_mngr_->Execute(command);  
-  } catch (int exc) {
-    throw exc;
+    result = task_mngr_->Execute(command);  
   } catch (std::runtime_error& exc) {
     throw exc;
   }
+  return result;
 }
 
 void Controller::SetOutputStr(std::string** str) {
