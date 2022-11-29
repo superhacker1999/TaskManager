@@ -4,6 +4,7 @@
 #include <map>
 #include "../parser/parser.h"
 #include "../dbhandler/dbhandler.h"
+#include <exception>
 
 // taskmanager has a map of ecncoding command
 // and pointers to the functions of DBHandler
@@ -23,6 +24,7 @@ class TaskManager {
     std::map<int, Parser::func_> functions_;
 
     void UpdateMap_();
+    void test();
     
 };  // class TaskManager
 

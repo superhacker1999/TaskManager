@@ -11,11 +11,10 @@ TaskManager::~TaskManager() {
 void TaskManager::Execute(const std::string& command) {
   auto result = parser_.ParseCommand(command);
   if (result.first == kEXIT) {
-    // instructions to exit
+    throw EXIT_SUCCESS;
   } else if (result.first == kERROR) {
-    // sending error to view class
+    throw std::runtime_error("Invalid command.");
   } else {
-    // std::cout << "vec size = " << result.second.size() << std::endl;
     data_ = result.second;
     UpdateMap_();
     functions_[result.first](data_);

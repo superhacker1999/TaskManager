@@ -12,7 +12,14 @@ void Interface::Run() {
   std::string command;
   while (true) {
     getline(std::cin, command);
-    controller_->Execute(command);
+    try {
+      controller_->Execute(command);
+    } catch (int exc) {
+        std::cout << "Exit signal\n";
+        break;
+    } catch (std::runtime_error& exc) {
+        std::cout << exc.what() << std::endl;
+    }
   }
 }
 

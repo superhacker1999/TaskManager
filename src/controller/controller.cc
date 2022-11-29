@@ -9,6 +9,11 @@ Controller::~Controller() {
 }
 
 void Controller::Execute(const std::string& command) {
-  task_mngr_->Execute(command);
+  try {
+    task_mngr_->Execute(command);  
+  } catch (int exc) {
+    throw exc;
+  } catch (std::runtime_error& exc) {
+    throw exc;
+  }
 }
-
