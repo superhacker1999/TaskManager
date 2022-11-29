@@ -17,4 +17,5 @@ debug: clean
 test:	build
 	./mngr $(DB_PATH)
 
-
+style_check:
+	

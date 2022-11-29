@@ -19,7 +19,6 @@ int TaskManager::Execute(const std::string& command) {
     try {
       output_str_ = (dbhandler_->*functions_[result.first])(result.second);
     } catch (std::exception& err) {
-      std::cout << "incorrindata\n";
       throw std::invalid_argument("Incorrect input data.");
     }
   }

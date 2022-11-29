@@ -1,7 +1,8 @@
 #include "controller.h"
 
-Controller::Controller(const std::string& file_path) {
-  task_mngr_ = new TaskManager(file_path);
+Controller::Controller(const std::string& file_path) 
+    : task_mngr_(new TaskManager(file_path)) {
+  ;
 }
 
 Controller::~Controller() {

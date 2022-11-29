@@ -1,7 +1,7 @@
 #include "parser.h"
 
-Parser::Parser() {
-  commands_ = {"exit", "add", "done", "update", "delete", "select"};
+Parser::Parser()
+    : commands_({"exit", "add", "done", "update", "delete", "select"}) {
   for (int i = kEXIT; i <= kSELECT; ++i)
     funcs_.insert(std::make_pair(commands_.at(i - 1), i));
 }
@@ -28,7 +28,6 @@ Parser::str_vec_ Parser::PrepareCommand_(const std::string& command) {
     end = command.find(delim, start);
     result.push_back(command.substr(start, end - start));
   }
-  // remove command word from vector, we dont need it
   result.erase(result.begin());
   return result;
 }

@@ -6,11 +6,6 @@
 #include "../dbhandler/dbhandler.h"
 #include <exception>
 
-// taskmanager has a map of ecncoding command
-// and pointers to the functions of DBHandler
-// in case something need to execute, just add new data to data_ vector
-// and run a method using functions_.find([command_encoding])();
-
 class TaskManager {
   public:
     TaskManager(const std::string& file_path);
@@ -24,8 +19,6 @@ class TaskManager {
     Parser parser_;
     std::map< int, DBHandlerFunc > functions_;
     std::string output_str_;
-
-    void UpdateMap_();
     
 };  // class TaskManager
 
