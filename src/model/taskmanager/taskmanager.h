@@ -16,12 +16,12 @@ class TaskManager {
     TaskManager(const std::string& file_path);
     ~TaskManager();
     void Execute(const std::string& command);
+    using DBHandlerFunc = const std::string (DBHandler::*) (Parser::str_vec_);
 
   private:
     DBHandler* dbhandler_;
     Parser parser_;
-    Parser::str_vec_ data_;
-    std::map<int, Parser::func_> functions_;
+    std::map< int, DBHandlerFunc > functions_;
 
     void UpdateMap_();
     void test();

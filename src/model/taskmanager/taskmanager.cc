@@ -1,7 +1,12 @@
 #include "taskmanager.h"
 
 TaskManager::TaskManager(const std::string& file_path) : dbhandler_(new DBHandler(file_path)) {
-  UpdateMap_();
+  functions_ = {
+    {kERROR, nullptr} , {kEXIT, nullptr},
+    {kADD, &DBHandler::AddTask}, {kADD, &DBHandler::MakeItDone},
+    {kUPDATE, &DBHandler::UpdateTask}, {kDELETE, &DBHandler::DeleteTask},
+    {kSELECT, &DBHandler::SelectTasks}
+  };
 }
 
 TaskManager::~TaskManager() {
@@ -15,19 +20,6 @@ void TaskManager::Execute(const std::string& command) {
   } else if (result.first == kERROR) {
     throw std::runtime_error("Invalid command.");
   } else {
-    data_ = result.second;
-    UpdateMap_();
-    functions_[result.first](data_);
+    (dbhandler_->*functions_[result.first])(result.second);
   }
-}
-
-void TaskManager::UpdateMap_() {
-  functions_ = {
-    {kERROR, nullptr}, {kEXIT, nullptr},
-    {kADD, std::bind(&DBHandler::AddTask, dbhandler_, data_)},
-    {kDONE, std::bind(&DBHandler::MakeItDone, dbhandler_, data_)},
-    {kUPDATE, std::bind(&DBHandler::UpdateTask, dbhandler_, data_)},
-    {kDELETE, std::bind(&DBHandler::DeleteTask, dbhandler_, data_)},
-    {kSELECT, std::bind(&DBHandler::SelectTasks, dbhandler_, data_)}
-  };
 }
