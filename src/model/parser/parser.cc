@@ -19,7 +19,8 @@ std::pair<int, Parser::str_vec_> Parser::ParseCommand(const std::string& command
     result.second = PrepareCommand_(command);
   } else if (command_line.find("select") != std::string::npos) {
     result.first = kSELECT;
-    result.second = PrepareCommand_(command);
+    result.second = std::vector<std::string>{command};
+    // result.second = PrepareCommand_(command);
   } else {
     // error command
     result.first = kERROR;

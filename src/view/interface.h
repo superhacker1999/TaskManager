@@ -14,5 +14,6 @@ class Interface {
 
     private:
       Controller* controller_;
+      std::string* output_str_;
 };  // class Interface
 #endif  // SRC_VIEW_INTERFACE_H_

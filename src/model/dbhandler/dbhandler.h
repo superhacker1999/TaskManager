@@ -29,6 +29,7 @@ class DBHandler {
 
     static int exec(void* NotUsed, int argc, char** argv, char** azColName);
     const std::string Execute_(const std::string& query, const std::string& on_success);
+    bool IsTaskExist_(std::string name);
 
 };  // class DBHandler
 #endif  // SRC_MODEL_DBHANDLER_H_

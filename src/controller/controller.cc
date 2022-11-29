@@ -17,3 +17,7 @@ void Controller::Execute(const std::string& command) {
     throw exc;
   }
 }
+
+void Controller::SetOutputStr(std::string** str) {
+  task_mngr_->SetOutputStr(str);
+}

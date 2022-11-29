@@ -2,6 +2,7 @@
 
 Interface::Interface(const std::string file_path) {
   controller_ = new Controller(file_path);
+  controller_->SetOutputStr(&output_str_);
 }
 
 Interface::~Interface() {
@@ -20,12 +21,14 @@ void Interface::Run() {
     } catch (std::runtime_error& exc) {
         std::cout << exc.what() << std::endl;
     }
+    std::cout << *output_str_;
   }
 }
 
 int main(int argc, char** argv) {
-  (void)argc;
-  Interface iface(argv[1]);
-  iface.Run();  
+  if (argc == 2) {
+    Interface iface(argv[1]);
+    iface.Run();  
+  }
   return 0;
 }
