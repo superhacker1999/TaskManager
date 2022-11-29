@@ -10,8 +10,6 @@ class Controller {
     ~Controller();
     void Execute(const std::string& command);
     void SetOutputStr(std::string** str);
-    // привязать string_view из iface к string в taskmngr;
-    // method to call parser of smth
 
   private:
     TaskManager* task_mngr_;

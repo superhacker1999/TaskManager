@@ -12,6 +12,7 @@ enum commands {
   kEXIT,
   kADD,
   kDONE,
+  kPREUPDATE,
   kUPDATE,
   kDELETE,
   kSELECT

@@ -11,6 +11,7 @@ class Interface {
      ~Interface();
 
      void Run();
+     void GetUpdateInfo(std::string& command);
 
     private:
       Controller* controller_;

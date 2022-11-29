@@ -12,17 +12,20 @@ std::pair<int, Parser::str_vec_> Parser::ParseCommand(const std::string& command
     result.first = kDONE;
     result.second = PrepareCommand_(command);
   } else if (command_line.find("update") != std::string::npos) {
-    result.first = kUPDATE;
-    result.second = PrepareCommand_(command);
+    if (std::count(command.begin(), command.end(), ' ') < 2)
+      result.first = kPREUPDATE;
+    else {
+      result.first = kUPDATE;
+      result.second = PrepareCommand_(command); 
+    }
   } else if (command_line.find("delete") != std::string::npos) {
     result.first = kDELETE;
     result.second = PrepareCommand_(command);
   } else if (command_line.find("select") != std::string::npos) {
     result.first = kSELECT;
     result.second = std::vector<std::string>{command};
-    // result.second = PrepareCommand_(command);
   } else {
-    // error command
+    // incorrect command
     result.first = kERROR;
   }
   return result;

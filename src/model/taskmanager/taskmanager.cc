@@ -19,6 +19,8 @@ void TaskManager::Execute(const std::string& command) {
     throw EXIT_SUCCESS;
   } else if (result.first == kERROR) {
     throw std::runtime_error("Invalid command.");
+  } else if (result.first == kPREUPDATE) {
+    throw (int)kPREUPDATE;
   } else {
     try {
       output_str_ = (dbhandler_->*functions_[result.first])(result.second);
